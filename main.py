@@ -1,6 +1,7 @@
 import os
 import subprocess
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -11,6 +12,9 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 app = Client("video_trim_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
+@app.on_message(filters.command("start") & filters.private)
+async def start_cmd(client, message: Message):
+    await message.reply_text("👋 Hello I am Haklesh Bot.\nSend me a video and I'll remove the first 4 seconds.")
 
 @app.on_message(filters.video)
 async def trim_4sec(client, message):
